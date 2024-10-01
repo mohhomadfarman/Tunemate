@@ -1,18 +1,29 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { checkData, storeData } from './Screens/Utility/asyncStorageUtils';
 
 export default function SplashScreen({ navigation }) {
+  useEffect(() => {
+
+    const fetchData = async () => {
+      await storeData("0"); 
+    };
+    fetchData();
+
+  }, [navigation]);
   return (
     <View  style={styles.container}>
-      <LinearGradient
+      {/* <LinearGradient
         colors={['#000428', '#004e92']}
         style={styles.background}
-      >
-        <View >
+      > */}
+      <ImageBackground source={require('./Assets/bg.jpg')} resizeMode="cover" style={styles.image}>
+        <View style={styles.brandbox} >
           <Image
-            source={require('./03xxaa.png')}
+            source={require('./Assets/LogoMusic.png')}
             style={styles.logo}
+            alt='Select Images'
           />
           <Text 
           style={styles.brandName}
@@ -23,7 +34,8 @@ export default function SplashScreen({ navigation }) {
              >Tap to Continue</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+        </ImageBackground>
+      {/* </LinearGradient> */}
     </View>
   );
 }
@@ -32,6 +44,15 @@ export default function SplashScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+    },
+    image: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    brandbox:{
+      flex:1,
+      justifyContent: 'star',
+      alignItems: 'center',
     },
     background:{
         width:"100%",
@@ -43,14 +64,16 @@ const styles = StyleSheet.create({
     brandName: {
         marginTop:10,
       fontSize: 48,
+      fontWeight:"500",
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: "center",
       color:"#fff",
     },
     tapText:{
-        marginTop:30,
-        fontSize: 18,
+        marginTop:20,
+        fontSize: 14,
+        fontWeight:"300",
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: "center",
@@ -58,7 +81,7 @@ const styles = StyleSheet.create({
     },
     logo:{
         marginTop:100,
-        width:300,
+        width:200,
         height:200
     }
   });
